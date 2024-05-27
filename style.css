@@ -9,8 +9,8 @@ body {
   /* Consistent font family and line height */
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
-  background-color: #f4f4f9; /* Light background for readability */
-  color: #333;
+  background-color: #000000; /* Black background for readability */
+  color: #ffffff; /* White text color */
   margin: 20px;
 }
 
@@ -44,14 +44,14 @@ p, li, a {
 
 a {
   /* Link color and transition for hover effects */
-  color: #4a4a8c;
+  color: #39ff14; /* Neon dark green links */
   text-decoration: none;
   transition: color 0.3s ease-in-out;
 }
 
 a:hover {
   /* Change color and underline effect on hover */
-  color: #6666cc;
+  color: #32cd32; /* Slightly lighter green for hover effect */
   text-decoration: underline;
 }
 
@@ -79,13 +79,13 @@ nav li {
 
 nav a {
   /* Bold text and distinct color for navigation links */
-  color: #4a4a8c;
+  color: #39ff14;
   font-weight: bold;
 }
 
 main {
   /* Main content area with a light background, padding, and shadow */
-  background-color: #ffffff;
+  background-color: #333333; /* Dark background for content area */
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -120,3 +120,12 @@ footer {
   font-size: 0.9em;
 }
 
+/* Specific styling for profile-pic-test.png */
+#profile-image {
+  display: block;
+  margin: 20px auto;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 3px solid #4a4a8c;
+}
