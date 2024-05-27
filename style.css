@@ -1,0 +1,131 @@
+/* Universal settings for the entire site */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  /* Consistent font family and line height */
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  background-color: #000000; /* Black background for readability */
+  color: #ffffff; /* White text color */
+  margin: 20px;
+}
+
+header, footer {
+  /* Centered text and visually appealing backgrounds for header and footer */
+  text-align: center;
+  background-color: #4a4a8c;
+  color: #ffffff;
+  padding: 20px 0;
+  border-radius: 10px;
+  margin-bottom: 20px; /* Separation between header/footer and other content */
+}
+
+h1 {
+  /* Prominent header for the main title */
+  margin-bottom: 10px;
+  font-size: 2.5em;
+}
+
+h2 {
+  /* Secondary headers with distinctive coloring */
+  font-size: 1.8em;
+  color: #4a4a8c;
+  margin-bottom: 10px;
+}
+
+p, li, a {
+  /* General text sizing for better readability */
+  font-size: 1.1em;
+}
+
+a {
+  /* Link color and transition for hover effects */
+  color: #39ff14; /* Neon dark green links */
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+a:hover {
+  /* Change color and underline effect on hover */
+  color: #32cd32; /* Slightly lighter green for hover effect */
+  text-decoration: underline;
+}
+
+nav {
+  /* Navigation bar styling with centered and rounded corners */
+  margin-bottom: 20px;
+  text-align: center;
+  padding: 10px;
+  background-color: #e0e0f8;
+  border-radius: 10px;
+}
+
+nav ul {
+  /* Inline-block layout for navigation items */
+  list-style: none;
+  display: inline-block;
+  padding: 0;
+}
+
+nav li {
+  /* Inline navigation items with spacing */
+  display: inline;
+  margin: 0 15px;
+}
+
+nav a {
+  /* Bold text and distinct color for navigation links */
+  color: #39ff14;
+  font-weight: bold;
+}
+
+main {
+  /* Main content area with a light background, padding, and shadow */
+  background-color: #333333; /* Dark background for content area */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+section {
+  /* Spacing between sections */
+  margin-bottom: 20px;
+}
+
+ul, ol {
+  /* Indent for unordered and ordered lists */
+  margin-left: 20px;
+}
+
+ul > li, ol > li {
+  /* Spacing between list items */
+  margin-bottom: 8px;
+}
+
+img {
+  /* Centered images with rounded borders and slight styling */
+  display: block;
+  margin: 10px auto;
+  border-radius: 10px;
+  border: 2px solid #e0e0f8;
+}
+
+footer {
+  /* Footer with smaller font size and separation */
+  margin-top: 20px;
+  font-size: 0.9em;
+}
+
+/* Specific styling for profile-pic-test.png */
+#profile-image {
+  display: block;
+  margin: 20px auto;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 3px solid #4a4a8c;
+}
