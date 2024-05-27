@@ -55,10 +55,19 @@ router.hooks({
     done();
   });
   break;
+  default :
+  done();
+}
+},
+already: (params) => {
+const view = params && params.data && params.data.view ? camelCase(params.data.view) : "home";
+
+render(store[view]);
+}
+});
 
 
-
-  router
+router
   .on({
     "/": () => render(),
     // Use object destructuring assignment to store the data and (query)params from the Navigo match parameter
