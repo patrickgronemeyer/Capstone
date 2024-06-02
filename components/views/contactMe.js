@@ -10,6 +10,7 @@ export default state => html`
     <ul>
       <li>Email: <a href="mailto:Pgronie@gmail.com">Pgronie@gmail.com</a></li>
       <li>Phone: 650-319-6984</li>
+      <li>Phone: 816-519-1580</li>
       <li>
         LinkedIn:
         <a href="https://www.linkedin.com/in/sec-cloud/" target="_blank"
