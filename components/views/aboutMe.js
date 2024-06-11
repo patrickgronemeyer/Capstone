@@ -12,7 +12,7 @@ export default state => html`
         <!--Ensure that the path to your profile image (profile.jpg) remains valid across different pages. Place the image in the same directory as your HTML files. Also add Css for profile picture picture-->
         <p>I am passionate about technology and programming.</p>
         <img
-          src="docs/pics/profilePicTest.png"
+          src="../../docs/Pics/profilePicTest.png"
           alt="Profile Picture"
           id="profile-image"
           width="200"
