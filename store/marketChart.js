@@ -1,4 +1,5 @@
 export default {
   header: "Market Chart",
-  view: "marketChart"
+  view: "marketChart",
+  records: []
 };
