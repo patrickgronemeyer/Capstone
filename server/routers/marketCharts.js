@@ -1,40 +1,45 @@
 import { Router } from "express";
-import Weather from "../models/Weather.js";
+import MarketChart from "../models/MarketChart";
 import axios from "axios";
 
 const router = Router();
 
+// "/:symbol/:interval"
 // Handle the request with HTTP GET method with query parameters and a url parameter
-router.get("/:city", async (request, response) => {
-  const city = request.params.city;
+router.get("/:symbol", async (request, response) => {
+  const symbol = request.params.symbol;
 
-  const weather = await axios
-    // Get request to retrieve the current weather data using the API key and providing a city name
+  const crypto = await axios
+    // Get request to retrieve the current symbol data using the API key and providing the Kline data
     .get(
-      `https://api.openweathermap.org/data/2.5/weather?appid=${process.env.OPEN_WEATHER_MAP_API_KEY}&units=imperial&q=${city}`
+      `https://api.mexc.com/api/v3/klines?symbol=${symbol}USDT&interval=60m`
     );
 
   const data = {
-    city: weather.data.name,
-    temp: weather.data.main.temp,
-    feelsLike: weather.data.main.feels_like,
-    description: weather.data.weather[0].main
+    symbol,
+    // interval,
+    openTime: crypto.data.openTime,
+    open: crypto.data.open, // Assuming open price is the first data point
+    high: crypto.data.high, // You might need to adjust based on actual data structure
+    low: crypto.data.low, // You might need to adjust based on actual data structure
+    close: crypto.data.close, // Assuming close price is the last data point
+    closeTime: crypto.data.closeTime
   };
 
-  const newWeather = new Weather(data);
+  const newMarketChart = new MarketChart(data);
 
-  const saveResponse = await newWeather.save();
+  const saveResponse = await newMarketChart.save();
 
   response.json(data);
 });
 
 // All our routes go here
-// Create Weather route
+// Create Symbol data route
 router.post("/", async (request, response) => {
   try {
-    const newWeather = new Weather(request.body);
+    const newMarketChart = new MarketChart(request.body);
 
-    const data = await newWeather.save();
+    const data = await newMarketChart.save();
 
     response.json(data);
   } catch (error) {
@@ -49,13 +54,13 @@ router.post("/", async (request, response) => {
   }
 });
 
-// Get all Weathers route
+// Get all Symbol data route
 router.get("/", async (request, response) => {
   try {
     // Store the query params into a JavaScript Object
     const query = request.query; // Defaults to an empty object {}
 
-    const data = await Weather.find(query);
+    const data = await MarketChart.find(query);
 
     response.json(data);
   } catch (error) {
