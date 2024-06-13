@@ -150,5 +150,3 @@ router
   })
   .notFound(() => render(store.viewNotFound))
   .resolve();
-
-

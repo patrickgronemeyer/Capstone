@@ -1,9 +1,8 @@
 import html from "html-literal";
-import MarketChart from "../../server/models/MarketChart";
 
 export default state => html`
   <head>
-    <input type="search" name="symble-search" id="search-box" />
+    <input type="search" name="symbol-search" id="search-box" />
     <button id="search-button">Search</button>
 
     <title>Live Crypto Chart</title>
