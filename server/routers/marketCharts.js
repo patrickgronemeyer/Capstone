@@ -13,16 +13,24 @@ router.get("/:symbol", async (request, response) => {
       // Get request to retrieve the current symbol data using the API key and providing the Kline data
       .get(
         `https://api.mexc.com/api/v3/klines?symbol=${symbol}USDT&interval=1M&limit=10`
-      );
+      )
+      .then(mexData => {
+        response.send(mexData.data);
+      });
 
     response.json(crypto.data);
   } catch (error) {
     console.log(error);
   }
 
+  // .catch(error => {
+  //   response.status(500).json(error);
+  // });
+
+  // Create a request body object to send to the API
   // const data = {
-  //   // symbol,
-  //   // interval,
+  //   //   // symbol,
+  //   //   // interval,
   //   openTime: crypto.data.openTime,
   //   open: crypto.data.open,
   //   high: crypto.data.high,

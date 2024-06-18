@@ -70,6 +70,10 @@ app.get("/status", (request, response) => {
   response.send(JSON.stringify({ message: "Service healthy" }));
 });
 
+
+
+
+
 // /new and needed, "/xxxx" are"end points" that are invoked in Root index.js
 app.use("/marketCharts", marketCharts);
 app.use("/weather", weather);

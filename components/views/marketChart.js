@@ -4,7 +4,7 @@ export default state => html`
   <input type="search" name="symbol-search" id="search-box" />
   <button id="search-button">Search</button>
 
-  <div id="data-table"></div>
+  <!-- <div id="data-table"></div>
   <table id="marketChart">
     <tr>
       <th>Open Time</th>
@@ -16,18 +16,22 @@ export default state => html`
       <th>Close Time</th>
     </tr>
     ${state.records
-      .map(record => {
-        return html`
-          <tr>
-            <td>${record.openTime}</td>
-            <td class="narrow-column">${record.open}</td>
-            <td class="narrow-column">${record.high}</td>
-            <td>${record.low}</td>
-            <td>${record.close}</td>
-            <td>${record.closeTime}</td>
-          </tr>
-        `;
-      })
-      .join("")}
-  </table>
+    .map(record => {
+      return html`
+        <tr>
+          <td>${record.openTime}</td>
+          <td class="narrow-column">${record.open}</td>
+          <td class="narrow-column">${record.high}</td>
+          <td>${record.low}</td>
+          <td>${record.close}</td>
+          <td>${record.closeTime}</td>
+        </tr>
+      `;
+    })
+    .join("")}
+  </table> -->
+
+  <section id="chart-container">
+    <canvas id="chart"></canvas>
+  </section>
 `;

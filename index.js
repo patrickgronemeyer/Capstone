@@ -3,6 +3,9 @@ import { camelCase } from "lodash";
 import { header, nav, main, footer } from "./components";
 import * as store from "./store";
 import axios from "axios";
+import Chart from "chart.js/auto";
+import "chartjs-adapter-date-fns";
+import { enUS } from "date-fns/locale";
 
 const router = new Navigo("/");
 
@@ -44,7 +47,60 @@ function afterRender(state) {
           });
       });
   }
+
+  if (state.view === "marketChart") {
+    // const labels = state.records.map(record => {
+    //   return record[0];
+    // });
+
+    const data = state.records.map(record => {
+      return {
+        // openTime: record[0],
+        // open: record[1],
+        // high: record[2],
+        // low: record[3],
+        // close: record[4],
+        // volume: record[5],
+        // closeTime: record[6],
+        // quoteAssetVolume: record[7]
+        // x: new Date(record[0]),
+        x: record[0],
+        y: record[2]
+      };
+    });
+
+    // console.log("matsinet-index.js:92-labels:", labels);
+    console.log("matsinet-index.js:93-data:", data);
+
+    new Chart(document.getElementById("chart"), {
+      type: "line",
+      data: {
+        datasets: [
+          {
+            data
+          }
+        ]
+      },
+      options: {
+        scales: {
+          x: {
+            title: {
+              text: "Time"
+            },
+            type: "time",
+            adapters: {
+              date: {
+                locale: enUS
+              }
+            }
+          }
+        }
+      }
+    });
+  }
 }
+
+
 //   .get(https://api.mexc.com/api/v3/klines?symbol=${symble}USDT&interval=60m)
 // https://api.mexc.com/api/v3/klines?symbol=${symble}   BTC USDT&interval=60m
 
@@ -60,6 +116,7 @@ router.hooks({
     // Add a switch case statement to handle multiple routes
     switch (view) {
       // Add a case for each view that needs data from an API
+      // New Case for the home View
       case "home":
         axios
           // Get request to retrieve the current weather data using the API key and providing a city name
