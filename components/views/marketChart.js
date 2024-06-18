@@ -1,15 +1,33 @@
 import html from "html-literal";
 
 export default state => html`
-  <head>
-    <input type="search" name="symbol-search" id="search-box" />
-    <button id="search-button">Search</button>
+  <input type="search" name="symbol-search" id="search-box" />
+  <button id="search-button">Search</button>
 
-    <title>Live Crypto Chart</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
-  <body>
-    <canvas id="cryptoChart" width="400" height="200"></canvas>
-    <script src="marketChat.js"></script>
-  </body>
+  <div id="data-table"></div>
+  <table id="marketChart">
+    <tr>
+      <th>Open Time</th>
+      <th class="narrow-column">Open</th>
+      <th class="narrow-column">High</th>
+      <th class="narrow-column">Low</th>
+      <th class="narrow-column">Close</th>
+      <th class="narrow-column">Volume</th>
+      <th>Close Time</th>
+    </tr>
+    ${state.records
+      .map(record => {
+        return html`
+          <tr>
+            <td>${record.openTime}</td>
+            <td class="narrow-column">${record.open}</td>
+            <td class="narrow-column">${record.high}</td>
+            <td>${record.low}</td>
+            <td>${record.close}</td>
+            <td>${record.closeTime}</td>
+          </tr>
+        `;
+      })
+      .join("")}
+  </table>
 `;
