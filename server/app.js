@@ -4,7 +4,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import weather from "./routers/weather.js"
-import marketChart from "./routers/marketCharts.js"
+import marketCharts from "./routers/marketCharts.js"
 
 // Load environment variables from .env file
 dotenv.config();
@@ -70,8 +70,12 @@ app.get("/status", (request, response) => {
   response.send(JSON.stringify({ message: "Service healthy" }));
 });
 
-// /new and needed
-app.use("/marketChart", marketChart);
+
+
+
+
+// /new and needed, "/xxxx" are"end points" that are invoked in Root index.js
+app.use("/marketCharts", marketCharts);
 app.use("/weather", weather);
 
 // Tell the Express app to start listening

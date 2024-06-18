@@ -7,11 +7,11 @@ const marketChartSchema = new mongoose.Schema({
     required: true,
     index: true // Index to optimize queries on the open time
   },
-  symbol: {
-    type: String,
-    required: true,
-    validate: /^[A-Za-z0-9]*$/
-  },
+  // symbol: {
+  //   type: String,
+  //   required: true,
+  //   validate: /^[A-Za-z0-9]*$/
+  // },
   // interval: {
   //   type: String,
   //   required: true,

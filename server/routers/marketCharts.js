@@ -1,5 +1,5 @@
 import { Router } from "express";
-import MarketChart from "../models/MarketChart";
+import MarketChart from "../models/MarketChart.js";
 import axios from "axios";
 
 const router = Router();
@@ -8,29 +8,40 @@ const router = Router();
 // Handle the request with HTTP GET method with query parameters and a url parameter
 router.get("/:symbol", async (request, response) => {
   const symbol = request.params.symbol;
+  try {
+    const crypto = await axios
+      // Get request to retrieve the current symbol data using the API key and providing the Kline data
+      .get(
+        `https://api.mexc.com/api/v3/klines?symbol=${symbol}USDT&interval=1M&limit=10`
+      )
+      .then(mexData => {
+        response.send(mexData.data);
+      });
 
-  const crypto = await axios
-    // Get request to retrieve the current symbol data using the API key and providing the Kline data
-    .get(
-      `https://api.mexc.com/api/v3/klines?symbol=${symbol}USDT&interval=60m`
-    );
+    response.json(crypto.data);
+  } catch (error) {
+    console.log(error);
+  }
 
-  const data = {
-    symbol,
-    // interval,
-    openTime: crypto.data.openTime,
-    open: crypto.data.open, // Assuming open price is the first data point
-    high: crypto.data.high, // You might need to adjust based on actual data structure
-    low: crypto.data.low, // You might need to adjust based on actual data structure
-    close: crypto.data.close, // Assuming close price is the last data point
-    closeTime: crypto.data.closeTime
-  };
+  // .catch(error => {
+  //   response.status(500).json(error);
+  // });
 
-  const newMarketChart = new MarketChart(data);
+  // Create a request body object to send to the API
+  // const data = {
+  //   //   // symbol,
+  //   //   // interval,
+  //   openTime: crypto.data.openTime,
+  //   open: crypto.data.open,
+  //   high: crypto.data.high,
+  //   low: crypto.data.low,
+  //   close: crypto.data.close,
+  //   closeTime: crypto.data.closeTime
+  // };
 
-  const saveResponse = await newMarketChart.save();
+  // const newMarketChart = new MarketChart(data);
 
-  response.json(data);
+  // const saveResponse = await newMarketChart.save();
 });
 
 // All our routes go here
@@ -47,7 +58,7 @@ router.post("/", async (request, response) => {
     console.log(error);
 
     // if error.name exists and error.name = validation error
-    if ("name" in error && error.name === "ValidationError")
+    if ("openTime" in error && error.openTime === "ValidationError")
       return response.status(400).json(error.errors);
 
     return response.status(500).json(error.errors);

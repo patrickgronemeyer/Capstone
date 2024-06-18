@@ -13,7 +13,7 @@ router.get("/:city", async (request, response) => {
     .get(
       `https://api.openweathermap.org/data/2.5/weather?appid=${process.env.OPEN_WEATHER_MAP_API_KEY}&units=imperial&q=${city}`
     );
-
+  // Create a request body object to send to the API
   const data = {
     city: weather.data.name,
     temp: weather.data.main.temp,
@@ -22,9 +22,7 @@ router.get("/:city", async (request, response) => {
   };
 
   const newWeather = new Weather(data);
-
   const saveResponse = await newWeather.save();
-
   response.json(data);
 });
 

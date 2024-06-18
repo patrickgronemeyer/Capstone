@@ -13,8 +13,8 @@ export default state => html`
         <p>I am passionate about technology and programming.</p>
         <img
           src="../../docs/Pics/profilePicTest.png"
-          alt="Profile Picture"
-          id="profile-image"
+          alt="profilePicTest"
+          id="profilePicTest"
           width="200"
           height="200"
         />
