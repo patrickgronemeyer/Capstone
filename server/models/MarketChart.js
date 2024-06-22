@@ -2,47 +2,34 @@ import mongoose from "mongoose";
 
 // change scheme for market chart
 const marketChartSchema = new mongoose.Schema({
-  openTime: {
-    type: Date,
-    required: true,
-    index: true // Index to optimize queries on the open time
+  symbol: {
+    type: String,
+    required: false,
+    validate: /^[A-Za-z0-9]*$/
   },
-  // symbol: {
-  //   type: String,
-  //   required: true,
-  //   validate: /^[A-Za-z0-9]*$/
-  // },
-  // interval: {
-  //   type: String,
-  //   required: true,
-  //   validate: /^[A-Za-z0-9]*$/
-  // },
-  open: {
-    type: Number,
-    required: true
+  interval: {
+    type: String,
+    // required: false,
+    validate: /^[A-Za-z0-9]*$/
   },
-  high: {
-    type: Number,
-    required: true
-  },
-  low: {
-    type: Number,
-    required: true
-  },
-  close: {
-    type: Number,
-    required: true
-  },
-  volume: {
-    type: Number,
-    required: true
-  },
-  closeTime: {
-    type: Date,
-    required: true
+  limit: {
+    type: String,
+    // required: false,
+    validate: /^[A-Za-z0-9]*$/
   }
 });
 
 const MarketChart = mongoose.model("MarketChart", marketChartSchema);
 
 export default MarketChart;
+
+// interval: {
+//   type: String,
+//   // required: false,
+//   validate: /^[A-Za-z0-9]*$/
+// },
+// limit: {
+//   type: String,
+//   // required: false,
+//   validate: /^[A-Za-z0-9]*$/
+// },

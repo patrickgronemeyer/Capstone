@@ -6,42 +6,38 @@ const router = Router();
 
 // "/:symbol/:interval"
 // Handle the request with HTTP GET method with query parameters and a url parameter
-router.get("/:symbol", async (request, response) => {
-  const symbol = request.params.symbol;
+router.get("/:symbol/:interval/:limit", async (request, response) => {
+  const { symbol, interval, limit } = request.params;
   try {
     const crypto = await axios
       // Get request to retrieve the current symbol data using the API key and providing the Kline data
       .get(
-        `https://api.mexc.com/api/v3/klines?symbol=${symbol}USDT&interval=1M&limit=10`
+        `https://api.mexc.com/api/v3/klines?symbol=${symbol}USDT&interval=${interval}&limit=${limit}`
       )
-      .then(mexData => {
-        response.send(mexData.data);
-      });
+      .then(async mexData => {
+        // Request body object for the api call crypto
+        const data = {
+          symbol,
+          interval,
+          limit
+          //   openTime: crypto[0].openTime,
+          //   open: crypto[0].open,
+          //   high: crypto[0].high,
+          //   low: crypto[0].low,
+          //   close: crypto[0].close,
+          //   closeTime: crypto[0].closeTime
+        };
 
-    response.json(crypto.data);
+        const newMarketChart = new MarketChart(data);
+        // Save the new MarketChart instance to the database
+        const saveResponse = await newMarketChart.save();
+        // Creates a new instance of the MarketChart model with the data from the API response
+        response.json(mexData.data);
+      });
   } catch (error) {
     console.log(error);
+    response.status(500).json(error);
   }
-
-  // .catch(error => {
-  //   response.status(500).json(error);
-  // });
-
-  // Create a request body object to send to the API
-  // const data = {
-  //   //   // symbol,
-  //   //   // interval,
-  //   openTime: crypto.data.openTime,
-  //   open: crypto.data.open,
-  //   high: crypto.data.high,
-  //   low: crypto.data.low,
-  //   close: crypto.data.close,
-  //   closeTime: crypto.data.closeTime
-  // };
-
-  // const newMarketChart = new MarketChart(data);
-
-  // const saveResponse = await newMarketChart.save();
 });
 
 // All our routes go here
