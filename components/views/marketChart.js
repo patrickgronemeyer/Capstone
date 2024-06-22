@@ -1,37 +1,52 @@
 import html from "html-literal";
 
 export default state => html`
-  <input type="search" name="symbol-search" id="search-box" />
-  <button id="search-button">Search</button>
+  <section id="crypto selector background">
+    <form id="crypto form" method="POST" action="">
+      <h2>Market Chart</h2>
+      <div>
+        <label for="symbol">Symbol:</label>
+        <input
+          type="text"
+          id="symbol"
+          name="symbol"
+          placeholder="Enter cryptocurrency symbol"
+          required
+          oninput="this.value = this.value.toUpperCase()"
+        />
+      </div>
+      <div>
+        <label for="interval">Interval:</label>
+        <select id="interval" name="interval">
+          <option value="1m">1 minute</option>
+          <option value="5m">5 minutes</option>
+          <option value="15m">15 minutes</option>
+          <option value="30m">30 minutes</option>
+          <option value="1h">1 hour</option>
+          <option value="2h">2 hours</option>
+          <option value="4h">4 hours</option>
+          <option value="6h">6 hours</option>
+          <option value="8h">8 hours</option>
+          <option value="12h">12 hours</option>
+          <option value="1d">1 day</option>
+          <option value="3d">3 days</option>
+          <option value="1w">1 week</option>
+          <option value="1M">1 month</option>
+        </select>
+      </div>
+      <div>
+        <label for="limit">Limit:</label>
+        <select id="limit" name="limit">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+        </select>
+      </div>
+      <input type="submit" name="submit" value="Get crypto INFO" id="submit" />
+    </form>
 
-  <!-- <div id="data-table"></div>
-  <table id="marketChart">
-    <tr>
-      <th>Open Time</th>
-      <th class="narrow-column">Open</th>
-      <th class="narrow-column">High</th>
-      <th class="narrow-column">Low</th>
-      <th class="narrow-column">Close</th>
-      <th class="narrow-column">Volume</th>
-      <th>Close Time</th>
-    </tr>
-    ${state.records
-    .map(record => {
-      return html`
-        <tr>
-          <td>${record.openTime}</td>
-          <td class="narrow-column">${record.open}</td>
-          <td class="narrow-column">${record.high}</td>
-          <td>${record.low}</td>
-          <td>${record.close}</td>
-          <td>${record.closeTime}</td>
-        </tr>
-      `;
-    })
-    .join("")}
-  </table> -->
-
-  <section id="chart-container">
-    <canvas id="chart"></canvas>
+    <section id="chart-container">
+      <canvas id="chart"></canvas>
+    </section>
   </section>
 `;

@@ -30,13 +30,23 @@ function afterRender(state) {
   // submit/searchbutton button
   if (state.view === "marketChart") {
     // Add an event handler for the submit button on the form
-    document
-      .getElementById("search-button")
-      .addEventListener("click", event => {
+    document.querySelector("form").addEventListener("submit", async event => {
         event.preventDefault();
-        const symbol = document.getElementById("search-box").value;
-        axios
-          .get(`${process.env.GTRADE_API_URL}/marketCharts/${symbol}`)
+
+    // Get the form elements
+    const symbolInput = document.getElementById("symbol");
+    const intervalInput = document.getElementById("interval");
+    const limitInput = document.getElementById("limit");
+
+    // Extract the values from the form elements
+    const symbol = symbolInput.value.toUpperCase();
+    const interval = intervalInput.value;
+    const limit = limitInput.value;
+
+        // create a post axios call that stores request data including symbol interval and limit
+        await axios
+          // .post(`${process.env.GTRADE_API_URL}/marketCharts`, { symbol, interval, limit })
+          .get(`${process.env.GTRADE_API_URL}/marketCharts/${symbol}/${interval}/${limit}`)
           .then(response => {
             // We need to store the response to the state, in the next step but in the meantime let's see what it looks like so that we know what to store from the response.
             store.marketChart.records = response.data;
@@ -47,6 +57,7 @@ function afterRender(state) {
           });
       });
   }
+
 
   if (state.view === "marketChart") {
     // const labels = state.records.map(record => {
@@ -77,6 +88,7 @@ function afterRender(state) {
       data: {
         datasets: [
           {
+            label: "Price In USDT",
             data
           }
         ]
@@ -102,7 +114,6 @@ function afterRender(state) {
 
 
 //   .get(https://api.mexc.com/api/v3/klines?symbol=${symble}USDT&interval=60m)
-// https://api.mexc.com/api/v3/klines?symbol=${symble}   BTC USDT&interval=60m
 
 
 router.hooks({
