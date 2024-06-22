@@ -31,31 +31,30 @@ function afterRender(state) {
   if (state.view === "marketChart") {
     // Add an event handler for the submit button on the form
     document.querySelector("form").addEventListener("submit", async event => {
-        event.preventDefault();
+      event.preventDefault();
 
-    // Get the form elements
-    const symbolInput = document.getElementById("symbol");
-    const intervalInput = document.getElementById("interval");
-    const limitInput = document.getElementById("limit");
+      // Get the form elements
+      const symbolInput = document.getElementById("symbol");
+      const intervalInput = document.getElementById("interval");
+      const limitInput = document.getElementById("limit");
 
-    // Extract the values from the form elements
-    const symbol = symbolInput.value.toUpperCase();
-    const interval = intervalInput.value;
-    const limit = limitInput.value;
+      // Extract the values from the form elements
+      const symbol = symbolInput.value.toUpperCase();
+      const interval = intervalInput.value;
+      const limit = limitInput.value;
 
-        // create a post axios call that stores request data including symbol interval and limit
-        await axios
-          // .post(`${process.env.GTRADE_API_URL}/marketCharts`, { symbol, interval, limit })
-          .get(`${process.env.GTRADE_API_URL}/marketCharts/${symbol}/${interval}/${limit}`)
-          .then(response => {
-            // We need to store the response to the state, in the next step but in the meantime let's see what it looks like so that we know what to store from the response.
-            store.marketChart.records = response.data;
-            router.navigate("/marketChart");
-          })
-          .catch(error => {
-            console.log("It puked", error);
-          });
-      });
+      // create a post axios call that stores request data including symbol interval and limit
+      await axios
+        .get(`${process.env.GTRADE_API_URL}/marketCharts/${symbol}/${interval}/${limit}`)
+        .then(response => {
+          // We need to store the response to the state, in the next step but in the meantime let's see what it looks like so that we know what to store from the response.
+          store.marketChart.records = response.data;
+          router.navigate("/marketChart");
+        })
+        .catch(error => {
+          console.log("It puked", error);
+        });
+    });
   }
 
 
@@ -113,9 +112,6 @@ function afterRender(state) {
 }
 
 
-//   .get(https://api.mexc.com/api/v3/klines?symbol=${symble}USDT&interval=60m)
-
-
 router.hooks({
   before: (done, params) => {
     // We need to know what view we are on to know what data to fetch
@@ -131,7 +127,7 @@ router.hooks({
       case "home":
         axios
           // Get request to retrieve the current weather data using the API key and providing a city name
-          .get(`${process.env.GTRADE_API_URL}/weather/st%20louis`)
+          .get(`${process.env.GTRADE_API_URL}/weathers/st%20louis`)
           .then(response => {
             console.log("Weather Data", response.data);
             // Create an object to be stored in the Home state from the response
@@ -148,7 +144,7 @@ router.hooks({
       case "weather":
         // New Axios get request utilizing already made environment variable
         axios
-          .get(`${process.env.GTRADE_API_URL}/weather`)
+          .get(`${process.env.GTRADE_API_URL}/weathers`)
           .then(response => {
             console.log("response", response);
 
@@ -180,6 +176,23 @@ router.hooks({
           });
         break;
 
+      case "cryptoInfoRecords":
+        // New Axios get request utilizing already made environment variable
+        axios
+          // does not when making the APi call from browser,ERROR marketChart:1 Access to XMLHttpRequest at 'https://api.mexc.com/api/v3/klines?symbol=BTCUSDT&interval=60m' from origin 'http://localhost:1234' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+          .get(`${process.env.GTRADE_API_URL}/marketCharts`)
+          .then(response => {
+            console.log("response", response);
+
+            // We need to store the response to the state, in the next step but in the meantime let's see what it looks like so that we know what to store from the response.
+            store.cryptoInfoRecords.records = response.data;
+            done();
+          })
+          .catch(error => {
+            console.log("It puked", error);
+            done();
+          });
+        break;
 
       default:
         done();

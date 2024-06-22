@@ -3,7 +3,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import weather from "./routers/weather.js"
+import weather from "./routers/weathers.js"
 import marketCharts from "./routers/marketCharts.js"
 
 // Load environment variables from .env file
@@ -76,7 +76,7 @@ app.get("/status", (request, response) => {
 
 // /new and needed, "/xxxx" are"end points" that are invoked in Root index.js
 app.use("/marketCharts", marketCharts);
-app.use("/weather", weather);
+app.use("/weathers", weather);
 
 // Tell the Express app to start listening
 // Let the humans know I am running and listening on 4040
