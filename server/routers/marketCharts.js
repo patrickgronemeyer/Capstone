@@ -1,81 +1,62 @@
-import { Router } from "express";
-import MarketChart from "../models/MarketChart.js";
-import axios from "axios";
+import { Router } from "express"; // Import the Router class from the Express library
+import MarketChart from "../models/MarketChart.js"; // Import the MarketChart model
+import axios from "axios"; // Import the axios library for making HTTP requests
 
-const router = Router();
+const router = Router(); // Create a new instance of the Router class
 
-// "/:symbol/:interval"
-// Handle the request with HTTP GET method with query parameters and a url parameter
+// Handle the GET request with the specified parameters
 router.get("/:symbol/:interval/:limit", async (request, response) => {
-  const { symbol, interval, limit } = request.params;
+  const { symbol, interval, limit } = request.params; // Destructure the request parameters
   try {
-    const crypto = await axios
-      // Get request to retrieve the current symbol data using the API key and providing the Kline data
+    const crypto = await axios // Make a GET request to the specified URL
       .get(
         `https://api.mexc.com/api/v3/klines?symbol=${symbol}USDT&interval=${interval}&limit=${limit}`
       )
       .then(async mexData => {
-        // Request body object for the api call crypto
+        // Handle the response
         const data = {
+          // Create a new object with the extracted parameters
           symbol,
           interval,
           limit
-          //   openTime: crypto[0].openTime,
-          //   open: crypto[0].open,
-          //   high: crypto[0].high,
-          //   low: crypto[0].low,
-          //   close: crypto[0].close,
-          //   closeTime: crypto[0].closeTime
         };
 
-        const newMarketChart = new MarketChart(data);
-        // Save the new MarketChart instance to the database
-        const saveResponse = await newMarketChart.save();
-        // Creates a new instance of the MarketChart model with the data from the API response
-        response.json(mexData.data);
+        const newMarketChart = new MarketChart(data); // Create a new instance of the MarketChart model
+        const saveResponse = await newMarketChart.save(); // Save the new instance to the database
+        response.json(mexData.data); // Send the response data
       });
   } catch (error) {
-    console.log(error);
-    response.status(500).json(error);
+    console.log(error); // Log any errors that occur
+    response.status(500).json(error); // Send an error response
   }
 });
 
-// All our routes go here
-// Create Symbol data route
+// Handle the POST request
 router.post("/", async (request, response) => {
   try {
-    const newMarketChart = new MarketChart(request.body);
-
-    const data = await newMarketChart.save();
-
-    response.json(data);
+    const newMarketChart = new MarketChart(request.body); // Create a new instance of the MarketChart model
+    const data = await newMarketChart.save(); // Save the new instance to the database
+    response.json(data); // Send the response data
   } catch (error) {
-    // Output error to the console incase it fails to send in response
-    console.log(error);
-
-    // if error.name exists and error.name = validation error
-    if ("openTime" in error && error.openTime === "ValidationError")
-      return response.status(400).json(error.errors);
-
-    return response.status(500).json(error.errors);
+    console.log(error); // Log any errors that occur
+    if ("openTime" in error && error.openTime === "ValidationError") {
+      // Check if the error is a validation error
+      return response.status(400).json(error.errors); // Send a 400 Bad Request response with the error data
+    }
+    return response.status(500).json(error.errors); // Send a 500 Internal Server Error response with the error data
   }
 });
 
-// Get all Symbol data route
+// Handle the GET request for all symbols
 router.get("/", async (request, response) => {
   try {
-    // Store the query params into a JavaScript Object
-    const query = request.query; // Defaults to an empty object {}
-
-    const data = await MarketChart.find(query);
-
-    response.json(data);
+    const query = request.query; // Destructure the query parameters
+    const data = await MarketChart.find(query); // Find all instances of the MarketChart model that match the query
+    response.json(data); // Send the response data
   } catch (error) {
-    // Output error to the console incase it fails to send in response
-    console.log(error);
-
-    return response.status(500).json(error.errors);
+    console.log(error); // Log any errors that occur
+    return response.status(500).json(error.errors); // Send a 500 Internal Server Error response with the error data
   }
 });
 
-export default router;
+export default router; // Export the router instance

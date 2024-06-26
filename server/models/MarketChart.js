@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+// I developed a Node.js Express REST API server for managing long-term data storage via MongoDB Atlas, tested with Thunder Client.
 
 // change scheme for market chart
 const marketChartSchema = new mongoose.Schema({

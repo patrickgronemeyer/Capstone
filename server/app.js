@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import weather from "./routers/weathers.js"
 import marketCharts from "./routers/marketCharts.js"
 
+
 // Load environment variables from .env file
 dotenv.config();
 

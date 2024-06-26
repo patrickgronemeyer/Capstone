@@ -44,14 +44,14 @@ p, li, a {
 
 a {
   /* Link color and transition for hover effects */
-  color: #39ff14; /* Neon dark green links */
+  color: #02c202; /* Neon dark green links */
   text-decoration: none;
   transition: color 0.3s ease-in-out;
 }
 
 a:hover {
   /* Change color and underline effect on hover */
-  color: #32cd32; /* Slightly lighter green for hover effect */
+  color: #02c202; /* Slightly lighter green for hover effect */
   text-decoration: underline;
 }
 
@@ -79,7 +79,7 @@ nav li {
 
 nav a {
   /* Bold text and distinct color for navigation links */
-  color: #39ff14;
+  color: #117400;
   font-weight: bold;
 }
 
